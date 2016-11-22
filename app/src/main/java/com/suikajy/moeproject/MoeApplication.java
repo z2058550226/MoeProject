@@ -5,6 +5,13 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 
+import com.cpacm.core.CoreApplication;
+import com.cpacm.core.bean.AccountBean;
+import com.cpacm.core.cache.SettingManager;
+import com.cpacm.core.cache.SongManager;
+import com.cpacm.core.db.CollectionManager;
+import com.cpacm.core.db.dao.AccountDao;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,7 +19,7 @@ import java.util.List;
  * Created by Administrator on 2016/11/21.
  */
 
-public class MoeApplication extends Application {
+public class MoeApplication extends CoreApplication {
     private static MoeApplication instance;
 
     public static MoeApplication getInstance() {
@@ -24,9 +31,28 @@ public class MoeApplication extends Application {
         super.onCreate();
         instance = this;
         mList = new LinkedList<>();//链表?
+        // TODO: 2016/11/21 开启音乐服务
+//        SongManager.getInstance();
+//        CollectionManager.getInstance();
     }
 
     private List<Activity> mList;
+
+    private AccountBean accountBean;
+
+    public AccountBean getAccountBean() {
+        if (accountBean == null) {
+            int uid = SettingManager.getInstance().getSetting(SettingManager.ACCOUNT_ID, -1);
+            AccountDao accountDao = new AccountDao();
+            accountBean = accountDao.query(uid);
+            accountDao.close();
+        }
+        return accountBean;
+    }
+
+    public void setAccountBean(AccountBean accountBean) {
+        this.accountBean = accountBean;
+    }
 
     /**
      * 添加一个Activity到列表中

@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 
+import com.cpacm.core.cache.SettingManager;
 import com.suikajy.moeproject.R;
+import com.suikajy.moeproject.ui.account.LoginActivity;
 
 public class WelcomeActivity extends AbstractAppActivity {
 
@@ -23,10 +25,10 @@ public class WelcomeActivity extends AbstractAppActivity {
     }
 
     private void startAnimation() {
-        ObjectAnimator scaleXAnimator=ObjectAnimator.ofFloat(welComeView,"scaleX",0f,1f);
-        ObjectAnimator scaleYAnimator=ObjectAnimator.ofFloat(welComeView,"scaleY",0f,1f);
-        ObjectAnimator alphaAnimator=ObjectAnimator.ofFloat(welComeView,"alpha",0f,1f);
-        AnimatorSet animatorSet=new AnimatorSet();
+        ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(welComeView, "scaleX", 0f, 1f);
+        ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(welComeView, "scaleY", 0f, 1f);
+        ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(welComeView, "alpha", 0f, 1f);
+        AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.play(scaleXAnimator).with(scaleYAnimator).with(alphaAnimator);
         animatorSet.setDuration(1500);
         animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -39,7 +41,14 @@ public class WelcomeActivity extends AbstractAppActivity {
         });
     }
 
-    private void hasLogin(){
-
+    private void hasLogin() {
+        //SharedPreference的key值Account_id写死在SettingManager中
+        if (SettingManager.getInstance().getSetting(SettingManager.ACCOUNT_ID,-1)==-1){
+            startActivity(LoginActivity.class);
+        }else {
+            // TODO: 2016/11/21 开启主页面
+        }
+        finish();
+        overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
     }
 }

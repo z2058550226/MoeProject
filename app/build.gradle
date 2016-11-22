@@ -15,7 +15,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -39,5 +39,5 @@ dependencies {
     compile 'com.android.support:palette-v7:24.2.1'
     compile 'com.cleveroad:audiovisualization:0.9.4'
     compile 'com.lapism:searchview:3.8'
-    compile project(':core')
+    compile project(path: ':core')
 }

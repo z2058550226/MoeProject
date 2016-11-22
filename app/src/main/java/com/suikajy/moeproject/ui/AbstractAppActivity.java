@@ -26,7 +26,7 @@ public class AbstractAppActivity extends AppCompatActivity {
         MoeApplication.getInstance().addActivity(this);
     }
 
-    public void startActivityWithNoArgument(Class activity) {
+    public void startActivity(Class activity) {
         Intent intent = new Intent(this, activity);
         startActivity(intent);
     }
